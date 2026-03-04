@@ -318,16 +318,17 @@
             "CACE": { name: "Coordenação de Acumulação de Cargos", tag: "Legalidade", hierarchy: "Gabinete da Pró-Reitoria", sala: "Quad. Superior Esq. - Corredor Interno", tasks: ["Análise de legalidade de acumulação de vínculos", "Verificação de compatibilidade de horários", "Pareceres sobre regime de trabalho", "Atendimento a processos de admissão"], contacts: [{ label: "Geral", val: "(81) 2126-8172" }, { label: "Apoio", val: "(81) 2126-8003" }, { label: "E-mail", val: "cace.progepe@ufpe.br" }] },
             "COMISSOES_OCUP": { name: "Comissões (COSAIP e CORAX)", tag: "Adicionais", hierarchy: "Gabinete da Pró-Reitoria", sala: "Quad. Superior Esq. - Corredor Interno", tasks: ["Adicionais de Insalubridade e Periculosidade (COSAIP)", "Gratificação de Raios-X e Irradiação (CORAX)", "Análise e laudos para adicionais ocupacionais", "Orientação sobre processos administrativos de riscos"], contacts: [{ label: "Geral", val: "(81) 2126-8003" }, { label: "COSAIP", val: "seccosaip.progepe@ufpe.br" }, { label: "CORAX", val: "corax.progepe@ufpe.br" }] },
             "GLCP": { name: "Gerência de Legislação (GLCP)", tag: "Jurídico", hierarchy: "Gabinete da Pró-Reitoria", sala: "Quad. Inferior Esq. - Corredor Interno", tasks: ["Controle de processos judiciais e de Ouvidoria", "Atendimento a órgãos de controle (CGU, TCU, MPF)", "Orientação sobre legislação de pessoal", "Emissão de pareceres técnicos"], contacts: [{ label: "Telefone", val: "(81) 2126-8112" }, { label: "E-mail", val: "glcp.progepe@ufpe.br" }] },
+            "DAP_DIRETORIA": { name: "Diretoria de Administração de Pessoal (DAP)", tag: "Direção", hierarchy: "DAP / Administração de Pessoal", sala: "Quad. Superior Dir. - Corredor Interno", tasks: ["Gestão estratégica de pessoas", "Coordenação das áreas de assentamento, pagamento e aposentadoria", "Expediente administrativo da diretoria"], contacts: [{ label: "Geral", val: "(81) 2126-8141" }, { label: "E-mail", val: "dap@ufpe.br" }] },
             "CAS": { name: "Central de Atendimento ao Servidor", tag: "Atendimento", hierarchy: "DAP / Diretoria de Adm. de Pessoal", sala: "Entrada Centro-Esquerda", tasks: ["Primeiro acesso e problemas no SouGov/Sigepe", "Prova de Vida de aposentados e pensionistas", "Informe de Rendimentos e Contra-cheques", "Orientações gerais sobre plataformas de gestão"], contacts: [{ label: "Telefone", val: "(81) 2126-8166" }, { label: "WhatsApp", val: "(81) 2126-8176" }, { label: "E-mail", val: "centralservidor@ufpe.br" }] },
             "DTICOM": { name: "Tecnologia da Informação (DTIcom)", tag: "Sistemas", hierarchy: "Gabinete da Pró-Reitoria", sala: "Quad. Inferior Esq. - Corredor Interno", tasks: ["Gestão de unidades e designações no SIGRH", "Habilitação de usuários no SIAPE e SIGRH", "Habilitação de Homologador de Férias", "Extração de relatórios funcionais específicos"], contacts: [{ label: "Telefone", val: "(81) 2126-8169" }, { label: "E-mail", val: "dticom.progepe@ufpe.br" }] },
-            "CAPP": { name: "CAPP - Publicações e Funcões de Confiança", tag: "Publicações", hierarchy: "Gabinete", sala: "Quad. Superior Dir. - Corredor Externo", tasks: ["Publicações Oficiais", "Designações", "Bol. de Serviço"], contacts: [{ label: "E-mail", val: "publicacoes@ufpe.br" }] },
+            "CAPP": { name: "CAPP - Publicações e Funcões de Confiança", tag: "Publicações", hierarchy: "DAP / Administração de Pessoal", sala: "Quad. Superior Dir. - Corredor Externo", tasks: ["Publicações Oficiais", "Designações", "Bol. de Serviço"], contacts: [{ label: "E-mail", val: "publicacoes@ufpe.br" }] },
             "GABINETE": { name: "Gabinete da Pró-Reitoria", tag: "Direção", hierarchy: "Gabinete", sala: "Quad. Superior Esq. - Corredor Interno", tasks: ["Expediente Direto", "Assuntos Políticos"], contacts: [{ label: "Fone", val: "2126-8100" }] }
         };
 
         const coordinationGroups = {
             "coord_casf": { name: "C. Assentamento Funcional (CASF)", items: ["CASF_GERAL", "SCF", "SIF", "SAP"] },
             "coord_cpp": { name: "C. Pagamento de Pessoal (CPP)", items: ["CPP_GERAL", "CPP_EXANT", "CPP_REPOSICAO"] },
-            "coord_dap": { name: "DAP - Administração de Pessoal", items: ["CAS", "coord_cpp", "CAPE"] },
+            "coord_dap": { name: "DAP - Administração de Pessoal", items: ["DAP_DIRETORIA", "CAS", "coord_cpp", "CAPE", "CAPP", "coord_casf"] },
             "coord_ddp": { name: "DDP - Desenvolvimento de Pessoas", items: ["CPC", "CADMP_AVAL", "CADMP_MOV", "FORMARE"] },
             "coord_dqv": { name: "DQV - Qualidade de Vida", items: ["NASS", "SESST", "DQV_APOIO"] },
             "coord_gab": { name: "Gabinete e Comissões", items: ["GABINETE", "CACE", "COMISSOES_OCUP", "GLCP", "DTICOM"] }
@@ -457,7 +458,7 @@
             const tooltip = document.getElementById('tooltip');
             
             // Build Legend First to assign IDs
-            const legendKeys = ["CAS", "coord_casf", "CAPP", "CAPE", "coord_dap", "coord_cpp", "coord_ddp", "coord_dqv", "coord_gab"];
+            const legendKeys = ["CAS", "coord_casf", "CAPP", "CAPE", "coord_dap", "coord_cpp", "coord_ddp", "coord_dqv", "coord_gab", "DTICOM", "GLCP", "FORMARE"];
             legendKeys.forEach(k => {
                 const item = document.createElement('div');
                 item.className = 'legend-item';
