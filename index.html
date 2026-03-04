@@ -225,9 +225,9 @@
                                 <rect x="330" y="100" width="40" height="50" class="room-path" data-key="coord_dap" />
                                 <text x="350" y="125" text-anchor="middle" class="room-label" transform="rotate(90 350 125)">DAP</text>
                             </g>
-                            <g onclick="showResult('CPP')">
-                                <rect x="330" y="160" width="40" height="80" class="room-path" data-key="CPP" />
-                                <text x="350" y="200" text-anchor="middle" class="room-label" transform="rotate(90 350 200)">CPP</text>
+                            <g onclick="showCoord('coord_cpp')">
+                                <rect x="330" y="160" width="40" height="80" class="room-path" data-key="coord_cpp" />
+                                <text x="350" y="200" text-anchor="middle" class="room-label" transform="rotate(90 350 200)">CPP (Pagamento)</text>
                             </g>
 
                             <!-- QUADRANTE INFERIOR DIREITO (Vazio) -->
@@ -300,7 +300,9 @@
 
     <script>
         const sectorsData = {
-            "CPP": { name: "Coordenação de Pagamento de Pessoal", tag: "Pagamento", hierarchy: "Diretoria de Administração de Pessoal (DAP)", sala: "Quad. Superior Dir. - Corredor Interno", tasks: ["Gestão da folha de pagamento de ativos e inativos", "Alteração de conta bancária para recebimento", "Pagamento de exercícios anteriores", "Isenção de IRRF e Reposição ao Erário", "Inclusão de vale transporte e outros auxílios"], contacts: [{ label: "Geral", val: "(81) 2126-8177" }, { label: "Pagamentos", val: "pagamento.progepe@ufpe.br" }, { label: "Exerc. Anteriores", val: "exanterior.progepe@ufpe.br" }, { label: "Reposição Erário", val: "2126-8678" }] },
+            "CPP_GERAL": { name: "Coordenação de Pagamento de Pessoal", tag: "Pagamento", hierarchy: "Diretoria de Administração de Pessoal (DAP)", sala: "Quad. Superior Dir. - Corredor Interno", tasks: ["Gestão da folha de pagamento de ativos e inativos", "Alteração de conta bancária para recebimento", "Inclusão de vale transporte e outros auxílios"], contacts: [{ label: "Geral", val: "(81) 2126-8177" }, { label: "E-mail", val: "pagamento.progepe@ufpe.br" }] },
+            "CPP_EXANT": { name: "Seção de Exercícios Anteriores", tag: "Pagamento", hierarchy: "DAP / Coord. de Pagamento de Pessoal", sala: "Quad. Superior Dir. - Corredor Interno", tasks: ["Processamento de pagamentos de anos anteriores", "Análise de processos de exercícios findos"], contacts: [{ label: "E-mail", val: "exanterior.progepe@ufpe.br" }] },
+            "CPP_REPOSICAO": { name: "Seção de Reposição ao Erário", tag: "Pagamento", hierarchy: "DAP / Coord. de Pagamento de Pessoal", sala: "Quad. Superior Dir. - Corredor Interno", tasks: ["Processos de devolução de valores ao erário", "Parcelamentos e notificações"], contacts: [{ label: "Telefone", val: "(81) 2126-8678" }] },
             "CADMP_AVAL": { name: "CADMP - Avaliação de Desempenho", tag: "Carreira", hierarchy: "DDP / Coord. de Avaliação e Movimentação", sala: "Quad. Superior Esq. - Corredor Externo", tasks: ["Progressão por mérito funcional (TAE)", "Avaliação de Estágio Probatório (Docente e TAE)", "Acompanhamento do desempenho funcional", "Dimensionamento da força de trabalho (DFT)"], contacts: [{ label: "Mérito/TAE", val: "(81) 2126-8174" }, { label: "Estágio Probatório", val: "(81) 2126-7148" }, { label: "E-mail", val: "desempenho.progepe@ufpe.br" }] },
             "CADMP_MOV": { name: "CADMP - Movimentação de Pessoal", tag: "Movimentação", hierarchy: "DDP / Coord. de Avaliação e Movimentação", sala: "Quad. Superior Esq. - Corredor Externo", tasks: ["Remoção e Redistribuição de servidores", "Cessão, requisição e exercício provisório", "Licença para tratar de interesse particular", "Licença para acompanhar cônjuge", "Licença Prêmio"], contacts: [{ label: "Telefone", val: "(81) 2126-8165" }, { label: "E-mail", val: "movimentacao.progepe@ufpe.br" }] },
             "SCF": { name: "SCF - Controle de Frequência e Relotação", tag: "Ponto e Licenças", hierarchy: "DAP / Coord. de Assentamento Funcional", sala: "Quad. Superior Dir. - Corredor Externo (CASF)", tasks: ["Gestão do ponto eletrônico e frequência", "Registro e acompanhamento de Férias", "PGD (Programa de Gestão e Desempenho)", "Licenças: Maternidade, Adotante, Paternidade, Nojo, Gala e Prêmio", "Afastamentos a serviço"], contacts: [{ label: "Telefone", val: "(81) 2126-8039" }, { label: "E-mail", val: "frequencia.progepe@ufpe.br" }] },
@@ -324,10 +326,11 @@
 
         const coordinationGroups = {
             "coord_casf": { name: "C. Assentamento Funcional (CASF)", items: ["CASF_GERAL", "SCF", "SIF", "SAP"] },
-            "coord_dap": { name: "DAP - Administração de Pessoal", items: ["CPP", "CAPE", "CAS"] },
-            "coord_ddp": { name: "DDP - Desenvolvimento de Pessoas", items: ["CPC", "CADMP_AVAL", "CADMP_MOV"] },
+            "coord_cpp": { name: "C. Pagamento de Pessoal (CPP)", items: ["CPP_GERAL", "CPP_EXANT", "CPP_REPOSICAO"] },
+            "coord_dap": { name: "DAP - Administração de Pessoal", items: ["CAS", "coord_cpp", "CAPE"] },
+            "coord_ddp": { name: "DDP - Desenvolvimento de Pessoas", items: ["CPC", "CADMP_AVAL", "CADMP_MOV", "FORMARE"] },
             "coord_dqv": { name: "DQV - Qualidade de Vida", items: ["NASS", "SESST", "DQV_APOIO"] },
-            "coord_gab": { name: "Gabinete e Comissões", items: ["GABINETE", "CACE", "COMISSOES_OCUP"] }
+            "coord_gab": { name: "Gabinete e Comissões", items: ["GABINETE", "CACE", "COMISSOES_OCUP", "GLCP", "DTICOM"] }
         };
 
         const questions = [
@@ -342,8 +345,9 @@
                 { text: "Legislação, Processos ou Riscos Ocupacionais", next: 8 }
             ]},
             { id: 2, text: "Sobre questões financeiras, o que melhor descreve seu caso?", options: [
-                { text: "Contracheque, Conta Bancária ou Vale Transporte", result: "CPP" },
-                { text: "Dúvidas sobre Exercícios Anteriores ou Reposição ao Erário", result: "CPP" },
+                { text: "Contracheque, Conta Bancária ou Vale Transporte", result: "CPP_GERAL" },
+                { text: "Pagamento de Exercícios Anteriores", result: "CPP_EXANT" },
+                { text: "Reposição ao Erário / Devolução de Valores", result: "CPP_REPOSICAO" },
                 { text: "Sou aposentado e quero isenção de IRRF por doença", result: "CAPE" },
                 { text: "Ressarcimento de Plano de Saúde privado (Per Capita)", result: "DQV_APOIO" },
                 { text: "Adicional de Insalubridade, Periculosidade ou Raio-X", result: "COMISSOES_OCUP" },
@@ -438,8 +442,8 @@
             g.items.forEach(k => {
                 const b = document.createElement('button');
                 b.className = 'btn-option';
-                b.innerText = sectorsData[k].name;
-                b.onclick = () => showResult(k);
+                b.innerText = coordinationGroups[k] ? coordinationGroups[k].name : (sectorsData[k] ? sectorsData[k].name : k);
+                b.onclick = () => coordinationGroups[k] ? showCoord(k) : showResult(k);
                 grid.appendChild(b);
             });
             document.getElementById('selector-overlay').style.display = 'flex';
@@ -453,7 +457,7 @@
             const tooltip = document.getElementById('tooltip');
             
             // Build Legend First to assign IDs
-            const legendKeys = ["CAS", "coord_casf", "CAPP", "coord_dap", "coord_ddp", "coord_dqv", "coord_gab", "DTICOM", "GLCP", "FORMARE"];
+            const legendKeys = ["CAS", "coord_casf", "CAPP", "CAPE", "coord_dap", "coord_cpp", "coord_ddp", "coord_dqv", "coord_gab"];
             legendKeys.forEach(k => {
                 const item = document.createElement('div');
                 item.className = 'legend-item';
