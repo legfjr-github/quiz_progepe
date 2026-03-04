@@ -451,21 +451,36 @@
         function initMap() {
             const legend = document.getElementById('legend-container');
             const tooltip = document.getElementById('tooltip');
+            
+            // Build Legend First to assign IDs
+            const legendKeys = ["CAS", "coord_casf", "CAPP", "coord_dap", "coord_ddp", "coord_dqv", "coord_gab", "DTICOM", "GLCP", "FORMARE"];
+            legendKeys.forEach(k => {
+                const item = document.createElement('div');
+                item.className = 'legend-item';
+                item.id = 'legend-' + k;
+                item.innerHTML = coordinationGroups[k] ? `<b>${coordinationGroups[k].name}</b>` : (sectorsData[k] ? sectorsData[k].name : k);
+                item.onclick = () => coordinationGroups[k] ? showCoord(k) : showResult(k);
+                legend.appendChild(item);
+            });
+
             document.querySelectorAll('.room-path').forEach(p => {
                 const k = p.getAttribute('data-key');
                 p.onmouseenter = (e) => {
                     tooltip.innerText = coordinationGroups[k] ? coordinationGroups[k].name : (sectorsData[k] ? sectorsData[k].name : "");
                     tooltip.style.display = 'block';
+                    
+                    // Highlight Legend
+                    const legItem = document.getElementById('legend-' + k);
+                    if (legItem) {
+                        legItem.classList.add('active');
+                        legItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    }
                 };
                 p.onmousemove = (e) => { tooltip.style.left = e.clientX + 10 + 'px'; tooltip.style.top = e.clientY + 10 + 'px'; };
-                p.onmouseleave = () => tooltip.style.display = 'none';
-            });
-            ["CAS", "coord_casf", "CAPP", "coord_dap", "coord_ddp", "coord_dqv", "coord_gab", "DTICOM", "GLCP", "FORMARE"].forEach(k => {
-                const item = document.createElement('div');
-                item.className = 'legend-item';
-                item.innerHTML = coordinationGroups[k] ? `<b>${coordinationGroups[k].name}</b>` : sectorsData[k].name;
-                item.onclick = () => coordinationGroups[k] ? showCoord(k) : showResult(k);
-                legend.appendChild(item);
+                p.onmouseleave = () => {
+                    tooltip.style.display = 'none';
+                    document.querySelectorAll('.legend-item').forEach(li => li.classList.remove('active'));
+                };
             });
         }
 
